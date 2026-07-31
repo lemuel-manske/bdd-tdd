@@ -14,15 +14,22 @@ public class Rent {
 
   private LocalDate returnDate;
 
-  Rent(final Customer customer, final List<Movie> movies, final float price) {
+  Rent(final Customer customer,
+       final List<Movie> movies,
+       final float price) {
     this.customer = customer;
     this.movies = movies;
     this.price = price;
+
     this.deliverDate = LocalDate.now().plusDays(DELIVER_DAYS);
   }
 
   public boolean hasFine() {
-    return effectiveReturnMoment().isAfter(deliverDate);
+    effectiveReturnMoment = returnDate != null
+      ? returnDate
+      : LocalDate.now();
+
+    return effectiveReturnMoment.isAfter(deliverDate);
   }
 
   public LocalDate getDeliverDate() {
@@ -43,9 +50,5 @@ public class Rent {
 
   void markAsReturned() {
     this.returnDate = LocalDate.now();
-  }
-
-  private LocalDate effectiveReturnMoment() {
-    return returnDate != null ? returnDate : LocalDate.now();
   }
 }

@@ -7,6 +7,7 @@ public class Logger {
   private String lastMessage;
 
   private Logger() {
+    // singleton
   }
 
   public static Logger getInstance() {

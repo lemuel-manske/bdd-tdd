@@ -11,10 +11,12 @@ public class MovieStore {
   private static final String MSG_MOVIE_UNAVAILABLE = "Filme indisponível para locação";
   private static final String MSG_RESERVATION_ERROR = "Erro no processamento da reserva";
 
-  private final Inventory inventory = Inventory.withDefaultCatalog();
-  private final PricingPolicy pricingPolicy = new PricingPolicy(PRICE_PER_MOVIE);
   private final Logger logger = Logger.getInstance();
 
+  private final Inventory inventory = Inventory.withDefaultCatalog();
+  
+  private final PricingPolicy pricingPolicy = new PricingPolicy(PRICE_PER_MOVIE);
+  
   public int stockOf(final Movie movie) {
     return inventory.quantityOf(movie);
   }
@@ -31,20 +33,28 @@ public class MovieStore {
       inventory.reserve(movies);
 
       final Rent rent = new Rent(customer, List.of(movies), price);
+    
       logger.log(MSG_RENTAL_SUCCESS);
+    
       return rent;
+    
     } catch (final SecurityException e) {
       logger.log(MSG_RESERVATION_ERROR);
+    
       throw e;
+    
     } catch (final IllegalStateException e) {
       logger.log(MSG_MOVIE_UNAVAILABLE);
+    
       throw e;
     }
   }
 
   public void returnRent(final Rent rent) {
     rent.markAsReturned();
+    
     inventory.release(rent.getMovies());
+    
     logger.log(MSG_RETURN_SUCCESS);
   }
 
