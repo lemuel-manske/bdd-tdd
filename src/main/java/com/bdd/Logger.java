@@ -2,13 +2,22 @@ package com.bdd;
 
 public class Logger {
 
-  private static final Logger THIS = new Logger();
+  private static final Logger INSTANCE = new Logger();
+
+  private String lastMessage;
+
+  private Logger() {
+  }
 
   public static Logger getInstance() {
-    return THIS;
+    return INSTANCE;
   }
 
   public String getLastMessage() {
-    throw new UnsupportedOperationException("Ainda não implementado");
+    return lastMessage;
+  }
+
+  public void log(final String message) {
+    this.lastMessage = message;
   }
 }

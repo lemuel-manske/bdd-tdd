@@ -1,19 +1,51 @@
 package com.bdd;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Rent {
 
-  public boolean hasFine() { // tem multa?
-    throw new UnsupportedOperationException("Ainda não implementado");
+  private static final int DELIVER_DAYS = 7;
+
+  private final Customer customer;
+  private final List<Movie> movies;
+  private final float price;
+  private final LocalDate deliverDate;
+
+  private LocalDate returnDate;
+
+  Rent(final Customer customer, final List<Movie> movies, final float price) {
+    this.customer = customer;
+    this.movies = movies;
+    this.price = price;
+    this.deliverDate = LocalDate.now().plusDays(DELIVER_DAYS);
   }
 
-  public LocalDateTime getDeliverDate() {
-    throw new UnsupportedOperationException("Ainda não implementado");
+  public boolean hasFine() {
+    return effectiveReturnMoment().isAfter(deliverDate);
+  }
+
+  public LocalDate getDeliverDate() {
+    return deliverDate;
   }
 
   public List<Movie> getMovies() {
-    throw new UnsupportedOperationException("Ainda não implementado");
+    return movies;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public float getPrice() {
+    return price;
+  }
+
+  void markAsReturned() {
+    this.returnDate = LocalDate.now();
+  }
+
+  private LocalDate effectiveReturnMoment() {
+    return returnDate != null ? returnDate : LocalDate.now();
   }
 }
