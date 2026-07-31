@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,8 +139,8 @@ public class RentTest {
     );
   }
 
-  private void assertDeliverDaysCountdown(final Rent rent, final int expectedDays) {
-    LocalDateTime expected = LocalDateTime.now().plusDays(expectedDays);
+  private void assertDeliverDaysCountdown(Rent rent, int expectedDays) {
+    LocalDate expected = LocalDate.now().plusDays(expectedDays);
 
     assertEquals(expected, rent.getDeliverDate());
   }
