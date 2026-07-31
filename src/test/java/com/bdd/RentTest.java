@@ -25,7 +25,7 @@ public class RentTest {
 
   @Test
   void shouldRentAMovie() { // Cenário 1
-    int stock = movieStore.stockOf(Movie.LORD_OF_THE_RINGS_1);
+    int initialStock = movieStore.stockOf(Movie.LORD_OF_THE_RINGS_1);
 
     Rent rent = movieStore.rent(
       customer,
@@ -37,7 +37,7 @@ public class RentTest {
       () -> assertDeliverDaysCountdown(rent, 7),
 
       () -> assertEquals(
-        stock - 1,
+        initialStock - 1,
         movieStore.stockOf(Movie.LORD_OF_THE_RINGS_1))
     );
   }
@@ -77,7 +77,7 @@ public class RentTest {
 
   @Test
   void shouldReturnMovieOnDueDate() { // Cenário 3
-    int stock = movieStore.stockOf(Movie.PROJECT_HAIL_MARY);
+    int initialStock = movieStore.stockOf(Movie.PROJECT_HAIL_MARY);
 
     Rent rent = movieStore.rent(
       customer,
@@ -86,21 +86,20 @@ public class RentTest {
 
     movieStore.returnRent(rent);
 
+    int finalStock = movieStore.stockOf(Movie.PROJECT_HAIL_MARY);
+
     assertAll(
       () -> assertLastLogMessage("Devolução realizada"),
       () -> assertFalse(rent.hasFine()),
-
-      () -> assertEquals(
-        stock,
-        movieStore.stockOf(Movie.PROJECT_HAIL_MARY))
+      () -> assertEquals(initialStock, finalStock)
     );
   }
 
   @Test
   void shouldNotRentMovieWithoutAvailableCopies() { // Cenário 4
-    int stock = movieStore.stockOf(Movie.HOBBIT_1);
+    int initialStock = movieStore.stockOf(Movie.HOBBIT_1);
 
-    assertEquals(0, stock);
+    assertEquals(0, initialStock);
 
     assertThrows(
       IllegalStateException.class,
@@ -109,18 +108,19 @@ public class RentTest {
         Movie.HOBBIT_1)
     );
 
+    int finalStock = movieStore.stockOf(Movie.HOBBIT_1);
+
     assertAll(
       () -> assertLastLogMessage("Filme indisponível para locação"),
-
-      () -> assertEquals(
-        0,
-        movieStore.stockOf(Movie.HOBBIT_1))
+      () -> assertEquals(initialStock, finalStock)
     );
   }
 
   @Test
   void shouldRejectTamperedRentalPrice() { // Cenário 5
     float tamperedPrice = 0.01f;
+
+    int initialStock = movieStore.stockOf(Movie.HOBBIT_2);
 
     assertThrows(
       SecurityException.class,
@@ -131,12 +131,11 @@ public class RentTest {
       )
     );
 
+    int finalStock = movieStore.stockOf(Movie.HOBBIT_2);
+
     assertAll(
       () -> assertLastLogMessage("Erro no processamento da reserva"),
-
-      () -> assertEquals(
-        1,
-        movieStore.stockOf(Movie.HOBBIT_2))
+      () -> assertEquals(initialStock, finalStock)
     );
   }
 
