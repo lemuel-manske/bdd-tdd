@@ -140,13 +140,13 @@ public class RentTest {
     );
   }
 
-  private void assertDeliverDaysCountdown(Rent rent, int expectedDays) {
+  private void assertDeliverDaysCountdown(final Rent rent, final int expectedDays) {
     LocalDateTime expected = LocalDateTime.now().plusDays(expectedDays);
 
     assertEquals(expected, rent.getDeliverDate());
   }
 
-  private void assertLastLogMessage(String expectedMessage) {
+  private void assertLastLogMessage(final String expectedMessage) {
     assertEquals(expectedMessage, logger.getLastMessage());
   }
 }
