@@ -3,18 +3,18 @@ package com.bdd;
 public class MovieStore {
 
   public int stockOf(final Movie movie) {
-    return -1;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 
   public Rent rent(final Customer customer, final Movie... movies) {
-    return null;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 
   public Rent rent(final Customer customer, final float price, final Movie... movies) {
-    return null;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 
   public void returnRent(final Rent rent) {
-    return;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 }

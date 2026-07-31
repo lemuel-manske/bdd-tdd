@@ -9,6 +9,6 @@ public class Logger {
   }
 
   public String getLastMessage() {
-    return "";
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 }

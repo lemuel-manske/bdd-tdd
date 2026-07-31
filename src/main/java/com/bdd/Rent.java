@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Rent {
 
-  public boolean hasFine() {
-    return false; // tem multa?
+  public boolean hasFine() { // tem multa?
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 
   public LocalDateTime getDeliverDate() {
-    return null;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 
   public List<Movie> getMovies() {
-    return null;
+    throw new UnsupportedOperationException("Ainda não implementado");
   }
 }
