@@ -25,7 +25,7 @@ public class Rent {
   }
 
   public boolean hasFine() {
-    effectiveReturnMoment = returnDate != null
+    final LocalDate effectiveReturnMoment = returnDate != null
       ? returnDate
       : LocalDate.now();
 
